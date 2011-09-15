@@ -16,9 +16,8 @@ GEM
       rack-mount (~> 0.6.14)
       rack-test (~> 0.5.7)
       tzinfo (~> 0.3.23)
-    active-fedora (3.0.3)
-      activeresource (~> 3.0.0)
-      activesupport (~> 3.0.0)
+    active-fedora (2.3.7)
+      activeresource
       equivalent-xml
       facets
       mediashelf-loggable
@@ -252,6 +251,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active-fedora (~> 2.3.7)
   bcrypt-ruby
   blacklight (~> 3.0.0)
   capybara
