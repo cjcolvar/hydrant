@@ -1,4 +1,11 @@
 Hydrant::Application.routes.draw do
+  Blacklight.add_routes(self)
+  HydraHead.add_routes(self)
+
+  root :to => "catalog#index"
+
+  devise_for :users
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
