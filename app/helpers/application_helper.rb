@@ -1,5 +1,5 @@
 module ApplicationHelper
     def application_name
-      'My Hydra'
+      'Hydrant'
     end
 end
