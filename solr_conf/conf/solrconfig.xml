@@ -122,7 +122,8 @@
         person_7_institution_t,person_8_institution_t,person_9_institution_t,
         mods_gps_t, mods_region_t, mods_site_t, mods_ecosystem_t,
         mods_timespan_start_t, mods_timespan_end_t, description_t, mods_title_info_main_title_t, mods_0_title_info_0_main_title_t, embargo_release_date_dt, note_t,
-        object_type_facet, department_facet, peer_reviewed_facet
+        object_type_facet, department_facet, peer_reviewed_facet,
+	extent_t, creator_t, creator_facet
       </str>
     </lst>
   </requestHandler>
@@ -156,7 +157,8 @@
         person_7_institution_t,person_8_institution_t,person_9_institution_t,
         mods_gps_t, mods_region_t, mods_site_t, mods_ecosystem_t,
         mods_timespan_start_t, mods_timespan_end_t, description_t, mods_title_info_t,mods_0_title_info_0_main_title_t, embargo_release_date_dt, note_t,
-        object_type_facet, department_facet, peer_reviewed_facet
+        object_type_facet, department_facet, peer_reviewed_facet,
+	extent_t, creator_t, creator_facet
       </str>
     </lst>
   </requestHandler>

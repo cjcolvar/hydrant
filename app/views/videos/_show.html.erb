@@ -9,6 +9,16 @@
 		 <% end %>
 	</h1>
 
+	<% unless @document_fedora.file_objects(:response_format=>:solr).hits.empty? %>
+	<div class="video_player">
+	  <video width="320" height="240" controls="controls">
+	    <source src="<%= file_asset_path(@document_fedora.file_objects(:response_format=>:solr).hits.first["id"]) %>" type="video/ogg" />
+	    Your browser does not support the video tag.
+	  </video>
+	</div>
+	<% end %>
+
+
     <%= render :partial => 'videos/show_description' %>
 
 

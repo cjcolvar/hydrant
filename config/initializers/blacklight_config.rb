@@ -44,10 +44,12 @@ Blacklight.configure(:shared) do |config|
   # config[:facet] << {:field_name => "format", :label => "Format", :limit => 10}
   config[:facet] = {
     :field_names => (facet_fields = [
-      "subject_facet"
+      "subject_facet",
+      "creator_facet"
     ]),
     :labels => {
-      "subject_facet" => "Subject"
+      "subject_facet" => "Subject",
+      "creator_facet" => "Creator"
     },
     # Setting a limit will trigger Blacklight's 'more' facet values link.
     # * If left unset, then all facet values returned by solr will be displayed.
@@ -63,7 +65,8 @@ Blacklight.configure(:shared) do |config|
     # sniffing requires solr requests to be made with "echoParams=all", for
     # app code to actually have it echo'd back to see it.     
     :limits => {
-      "subject_facet" => 20
+      "subject_facet" => 20,
+      "creator_facet" => 20
     }
   }
 
