@@ -9,7 +9,7 @@ require 'active-fedora'
 silence_warnings { ENABLE_SOLR_UPDATES=true }
 
 # Don't need to call ActiveFedora.init any more.  It's handled by {ActiveFedora::Railtie}
-# ActiveFedora.init
+ActiveFedora.init
 
 #
 # Loads EAD descriptors 

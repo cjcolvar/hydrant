@@ -5,7 +5,7 @@
   gem 'blacklight', '~> 3.0.0'
   gem 'hydra-head', '3.0.0pre3'
 #  gem 'hydra-head', :git => "git://github.com/projecthydra/hydra-head.git", :branch=>'rails3'
-  gem 'active-fedora', '~> 2.3.7'
+  gem 'active-fedora', '~> 3.0.4'
 
   # We will assume that you're using sqlite3 for testing/demo, 
   # but in a production setup you probably want to use a real sql database like mysql or postgres
