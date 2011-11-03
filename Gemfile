@@ -1,11 +1,9 @@
   source 'http://rubygems.org'
 
-  gem 'rails', '3.0.10'
+  gem 'rails', '~>3.0.10'
 
   gem 'blacklight', '~> 3.0.0'
-  gem 'hydra-head', '3.0.0pre3'
-#  gem 'hydra-head', :git => "git://github.com/projecthydra/hydra-head.git", :branch=>'rails3'
-  gem 'active-fedora', '~> 3.0.4'
+  gem 'hydra-head', '3.0.0.rc2'
 
   # We will assume that you're using sqlite3 for testing/demo, 
   # but in a production setup you probably want to use a real sql database like mysql or postgres
@@ -26,5 +24,7 @@
          gem 'database_cleaner'
          gem 'capybara'
          gem 'bcrypt-ruby'
+         gem "jettywrapper"
+         gem 'rest-client'
   end
 gem "devise"
