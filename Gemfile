@@ -3,7 +3,7 @@
   gem 'rails', '~>3.0.10'
 
   gem 'blacklight', '~> 3.0.0'
-  gem 'hydra-head', '3.0.0.rc2'
+  gem 'hydra-head', '3.0.1'
 
   # We will assume that you're using sqlite3 for testing/demo, 
   # but in a production setup you probably want to use a real sql database like mysql or postgres
