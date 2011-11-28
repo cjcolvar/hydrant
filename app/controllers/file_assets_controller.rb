@@ -3,6 +3,8 @@ require 'net/http/post/multipart'
 
 class FileAssetsController < ApplicationController
   include Hydra::FileAssets
+
+  skip_before_filter :verify_authenticity_token, :only => [:create]
   
   # Creates and Saves a File Asset to contain the the Uploaded file 
   # If container_id is provided:
@@ -20,9 +22,12 @@ class FileAssetsController < ApplicationController
 	sendOriginalToMatterhorn
 	flash[:notice] = "The uploaded file has been sent to Matterhorn for processing."
     elsif params.has_key?(:Filedata)
+      #logger.debug("Request headers dump: #{request.headers}");
       @file_assets = create_and_save_file_assets_from_params
       notice = []
       @file_assets.each do |file_asset|
+       begin
+	logger.debug("Running as user: " + current_user.to_s)
         apply_depositor_metadata(file_asset)
         
         notice << "The file #{file_asset.label} has been saved in <a href=\"#{asset_url(file_asset.pid)}\">#{file_asset.pid}</a>."
@@ -38,6 +43,10 @@ class FileAssetsController < ApplicationController
         end
         # If redirect_params has not been set, use {:action=>:index}
         logger.debug "Created #{file_asset.pid}."
+       rescue Exception => e
+	logger.debug("Exception encountered #{e}")
+	logger.debug(e.backtrace.join("\n"))
+       end
       end
       flash[:notice] = notice.join("<br/>") unless notice.blank?
     else
@@ -86,7 +95,7 @@ class FileAssetsController < ApplicationController
 
 	  res = Net::HTTP.start(uri.host, uri.port) do |http|
 	    res = http.request(req)
-	    logger.debug("Request to Matterhorn returned " + res.code)
+	    logger.debug("Request to Matterhorn returned #{res.code}")
 	  end
 	end
    end
