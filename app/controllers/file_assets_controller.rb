@@ -1,5 +1,6 @@
 require 'net/http/digest_auth'
 require 'net/http/post/multipart'
+require 'rubyhorn'
 
 class FileAssetsController < ApplicationController
   include Hydra::FileAssets
@@ -18,37 +19,12 @@ class FileAssetsController < ApplicationController
     end
     
     if params.has_key?(:Filedata) and params.has_key?(:original)
-	#TODO make call to matterhorn
 	sendOriginalToMatterhorn
+	#TODO store Workflow instance id and/or MediaPackage in VideoDCDatastream so we can show processing status on edit page later
 	flash[:notice] = "The uploaded file has been sent to Matterhorn for processing."
     elsif params.has_key?(:Filedata)
-      #logger.debug("Request headers dump: #{request.headers}");
-      @file_assets = create_and_save_file_assets_from_params
-      notice = []
-      @file_assets.each do |file_asset|
-       begin
-	logger.debug("Running as user: " + current_user.to_s)
-        apply_depositor_metadata(file_asset)
-        
-        notice << "The file #{file_asset.label} has been saved in <a href=\"#{asset_url(file_asset.pid)}\">#{file_asset.pid}</a>."
-          
-        if !params[:container_id].nil?
-          associate_file_asset_with_container(file_asset,'info:fedora/' + params[:container_id])
-        end
-  
-        ## Apply any posted file metadata
-        unless params[:asset].nil?
-          logger.debug("applying submitted file metadata: #{@sanitized_params.inspect}")
-          apply_file_metadata
-        end
-        # If redirect_params has not been set, use {:action=>:index}
-        logger.debug "Created #{file_asset.pid}."
-       rescue Exception => e
-	logger.debug("Exception encountered #{e}")
-	logger.debug(e.backtrace.join("\n"))
-       end
-      end
-      flash[:notice] = notice.join("<br/>") unless notice.blank?
+      notice = process_files
+      flash[:notice] = notice.join("<br/>".html_safe) unless notice.blank?
     else
       flash[:notice] = "You must specify a file to upload."
     end
@@ -62,41 +38,8 @@ class FileAssetsController < ApplicationController
   end
   
   def sendOriginalToMatterhorn
-	uri = URI.parse 'http://pawpaw.dlib.indiana.edu:8080/welcome.html'
-	uri.user = 'matterhorn_system_account'
-	uri.password = 'CHANGE_ME'
-
-	h = Net::HTTP.new uri.host, uri.port
-	req = Net::HTTP::Head.new uri.request_uri
-	req['X-REQUESTED-AUTH'] = 'Digest'
-	res = h.request req
-
-	digest_auth = Net::HTTP::DigestAuth.new
-	auth = digest_auth.auth_header uri, res['www-authenticate'], 'GET'
-	req = Net::HTTP::Post.new uri.request_uri
-	req.add_field 'Authorization', auth
-	res = h.request req
-	uri = URI.parse("http://pawpaw.dlib.indiana.edu:8080/ingest/addMediaPackage/fedora-test")
-	uri.user = 'matterhorn_system_account'
-	uri.password = 'CHANGE_ME'
-	h = Net::HTTP.new uri.host, uri.port
-	req = Net::HTTP::Head.new uri.request_uri
-	req['X-REQUESTED-AUTH'] = 'Digest'
-	res = h.request req
-	digest_auth = Net::HTTP::DigestAuth.new
-	auth = digest_auth.auth_header uri, res['www-authenticate'], 'POST'
-	
 	params[:Filedata].each do |file|
-	  file_name = file.original_filename
-	  reqparams = Array[["wdID", "fedora-test"], ["flavor", "video/source"], ["title", params[:container_id]],
-	    ["BODY", UploadIO.new(file, mime_type(file_name), file_name)]]
-	  req = Net::HTTP::Post::Multipart.new uri.path, reqparams
-	  req.add_field 'Authorization', auth
-
-	  res = Net::HTTP.start(uri.host, uri.port) do |http|
-	    res = http.request(req)
-	    logger.debug("Request to Matterhorn returned #{res.code}")
-	  end
+	  Rubyhorn.client.addMediaPackage(file, {"title" => params[:container_id], "flavor" => "video/source", "workflow" => "fedora-test", "filename" => file.original_filename})
 	end
    end
 end

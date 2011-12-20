@@ -3,8 +3,9 @@
   gem 'rails', '~>3.0.10'
 
   gem 'blacklight', '~> 3.0.0'
+#  gem "hydra-head", :path => "../../hydra/hydra-head"
   gem "hydra-head", :git => "git://github.com/projecthydra/hydra-head.git", :branch=>'master'
-#  gem 'hydra-head', '3.1.4'
+#  gem 'hydra-head', '3.1.5'
 #  gem 'hydra-head', '3.0.1'
 
   # We will assume that you're using sqlite3 for testing/demo, 
@@ -28,9 +29,10 @@
          gem 'bcrypt-ruby'
          gem "jettywrapper"
          gem 'rest-client'
-	 gem 'rsolr', '1.0.2'
 	
 	 # Added 
 	 gem 'net-http-digest_auth'
+
+	 gem 'rubyhorn', :git => "git://github.com/cjcolvar/rubyhorn.git"
   end
 gem "devise"
