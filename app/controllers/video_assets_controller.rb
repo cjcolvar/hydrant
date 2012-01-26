@@ -85,10 +85,11 @@ class VideoAssetsController < ApplicationController
 
 #    ds = ActiveFedora::Datastream.new(:dsid=> "content", :label => filename, :controlGroup => "E", :dsLocation => url, :mimeType=>mime_type(filename))
 #    video_asset.add_datastream(ds)
-    ds = video_asset.create_datastream(ActiveFedora::Datastream, "content", :dsid=> "content", :dsLabel => filename, :controlGroup => "E", :dsLocation => url, :mimeType=>mime_type(filename))
-    video_asset.add_datastream(ds)
+#    ds = video_asset.create_datastream(ActiveFedora::Datastream, "content", :dsid=> "content", :dsLabel => filename, :controlGroup => "R", :dsLocation => url, :mimeType=>mime_type(filename))
+#    video_asset.add_datastream(ds)
 
 #    video_asset.add_named_datastream("content", :dsid=>"content", :label=>filename, :dsLocation=>url, :mimeType=>mime_type(filename))
+    video_asset.set_url(url)
     video_asset.set_title_and_label( filename, :only_if_blank=>true )
 
     return video_asset
