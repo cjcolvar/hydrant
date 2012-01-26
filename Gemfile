@@ -2,11 +2,14 @@
 
   gem 'rails', '~>3.0.10'
 
-  gem 'blacklight', '~> 3.0.0'
+  gem 'blacklight', '~> 3.1.2'
+
 #  gem "hydra-head", :path => "../../hydra/hydra-head"
   gem "hydra-head", :git => "git://github.com/projecthydra/hydra-head.git", :branch=>'master'
 #  gem 'hydra-head', '3.1.5'
-#  gem 'hydra-head', '3.0.1'
+
+  gem 'active-fedora', '>=3.2.0'
+#  gem "active-fedora", :path => "../../hydra/active_fedora"
 
   # We will assume that you're using sqlite3 for testing/demo, 
   # but in a production setup you probably want to use a real sql database like mysql or postgres
@@ -34,5 +37,7 @@
 	 gem 'net-http-digest_auth'
 
 	 gem 'rubyhorn', :git => "git://github.com/cjcolvar/rubyhorn.git"
+
+	 gem 'mediashelf-loggable'
   end
 gem "devise"

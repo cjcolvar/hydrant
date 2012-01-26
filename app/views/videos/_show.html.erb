@@ -75,7 +75,8 @@
         <!--div class="video_player">
           <video width="320" height="240" controls preload id="video1" onerror="failed(event)">
 <!--            <source src="<%= file_asset_path(@document_fedora.file_objects(:response_format=>:solr).hits.first["id"]) %>" type='video/ogg; codecs="theora, vorbis"'/> -->
-            <!--source src="<%= asset_downloads_path(@document_fedora.file_objects(:response_format=>:solr).hits.first["id"], :download_id => "content") %>" type='video/ogg; codecs="theora, vorbis"'/>
+<!--            <source src="<%= asset_downloads_path(@document_fedora.file_objects(:response_format=>:solr).hits.first["id"], :download_id => "content") %>" type='video/ogg; codecs="theora, vorbis"'/> -->
+                <source src="<%= @document_fedora.file_objects.first.datastreams["descMetadata"].identifier_values.first %>" type='video/ogg; codecs="theora, vorbis"'/>
             Your browser does not support the video tag.
           </video-->
         </div>

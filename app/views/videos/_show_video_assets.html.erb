@@ -8,11 +8,10 @@
 	      <th>Uploaded</th>
 	    </tr>
 		<% @document_fedora.file_objects(:response_format=>:solr).each do |result| %>
-			<tr class="file_asset" >
+			<tr class="video_asset" >
 <!--			  <td><%= link_to result[solr_name("title", :text)], file_asset_path(result["id"]) %></td> -->
-<!--			  <td><%= link_to result[solr_name("title", :text)], asset_downloads_path(result["id"], :download_id => "content") %></td> -->
-			  <td><%= result[solr_name("title", :text)] %></td>
-			  <td><%= result[solr_name("extent", :text)] unless result[solr_name("extent", :text)].nil? %></td>
+			  <td><%= link_to result[solr_name("title", :text)], asset_downloads_path(result["id"], :download_id => "content") %></td>
+			  <td><%= result[solr_name("extent", :text)] %></td>
 			  <td>
 			    <% dt = DateTime.parse(result[ solr_name("system_create", :date)] ) -%>
 			    <%= format_date dt %>
