@@ -2,7 +2,10 @@
 <html>
 <head>
   <title>Hydrant</title>
-  <%= stylesheet_link_tag :all %>
+  <%= stylesheet_link_tag :all :recursive=>:all%>
+  <%= stylesheet_link_tag "/stylesheets/hydrant/main.css" %>
+
+  <link href="/stylesheets/hydrant/main.css" media="all" rel="stylesheet" type="text/css">
   <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tag %>
 </head>
