@@ -1,9 +1,3 @@
-// Inits iuplayer
-$('#mediaplayer').iuplayer({
-	file: 'd8c96ff8-cac9-4715-9aee-d244166d4ec1/ed070222-fbc2-4b41-8588-efcd785eb33c/Cheerios1960_512kb.flv',
-	streamer: 'rtmp://pawpaw.dlib.indiana.edu/matterhorn-engage/'
-});
-
 var totalW = $("#progressBar").width();
 var barOffsetLeft = $("#progressBar").offset().left;
 
