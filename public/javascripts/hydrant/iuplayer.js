@@ -1,42 +1,53 @@
+(function($){
+
+
 $.widget("ui.iuplayer", {
 	options: {
 		library: 'jwplayer', // using jwplayer by default
 		width: '480',
 		height: '270',
-		file: '',
-		streamer: '',
-		provider: 'rtmp', // streaming RTMP by default
+		file: null,
+		streamer: null,
+		provider: null, // streaming RTMP by default
 		annotations: ''
 	},
 	_init: function(){ 
-  	    console.log();
-
+		console.log(this.options.width);
+		
 		// Initiates using a chosen player library
 		if (this.options.library === 'jwplayer') {
 			jwplayer(this.element.attr('id')).setup({
 				'id': 'playerID',
 				'width': this.options.width,
 				'height': this.options.height,
-				'provider': this.options.provider,
-				'streamer': this.options.streamer,
-				'file': this.options.file,
+				'playlistfile': this.options.playlistfile,
+			    'playlist.position': this.options.playlistposition,
+			    'playlist.size': this.options.playlistsize,
 				'dock': 'true',
-				"controlbar.position": "bottom",
-				'preload': 'all',
+				'controlbar.position': 'bottom',
 				'bufferlength': '0',
 				modes: [
 					{
 						type: 'flash',
 						src: "/jwplayer/player.swf",
 						config: { skin: "/jwplayer/modieus5.zip"}
-					},
-					{type:'html5'}
-				],
-				// 'file': '/jwplayer/videolong.mp4',
-				plugins: {
-				        //'/jwplayer/annotation.js': { text: 'XYZ' },
-						//'/jwplayer/timeslidertooltipplugin-2.js' :{}
-			    }
+					}
+					,{type:'html5'}
+				]
+				// // 'provider': this.options.provider,
+				// // 'streamer': this.options.streamer,
+
+				// // 'file': this.options.file,
+				// // 			'preload': 'all',
+				// // 			'bufferlength': '0',
+				// modes: [
+				// 	{
+				// 		type: 'flash',
+				// 		src: "/jwplayer/player.swf",
+				// 		config: { skin: "/jwplayer/modieus5.zip"}
+				// 	},
+				// 	{type:'html5'}
+				// ]
 			});			
 		}
 		
@@ -48,6 +59,7 @@ $.widget("ui.iuplayer", {
 			
 			// Populates
 		}
-		
 	}
 });
+
+})(jQuery);

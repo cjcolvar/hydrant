@@ -58,6 +58,9 @@
 		
 		<script type="text/javascript">
 			$('#mediaplayer').iuplayer({
+				'playlistfile': '/jwplayer/playlist.xml',
+				'playlistposition': 'top',
+				'playlistsize': '1',
         			file: '<%= /rtmp:\/\/pawpaw.dlib.indiana.edu\/matterhorn-engage\/(.*)/.match(@document_fedora.file_objects.first.datastreams["descMetadata"].identifier_values.first)[1] %>',
         			streamer: 'rtmp://pawpaw.dlib.indiana.edu/matterhorn-engage/'
 			});
@@ -66,6 +69,9 @@
 		<script type="text/javascript" src="/javascripts/hydrant/main.js"></script>
 		
 		
+		<script type="text/javascript" src="/javascripts/hydrant/main.js"></script>
+		
+
         <!--div class="video_player">
           <video width="320" height="240" controls preload id="video1" onerror="failed(event)">
                 <source src="<%= @document_fedora.file_objects.first.datastreams["descMetadata"].identifier_values.first %>" type='video/ogg; codecs="theora, vorbis"'/>

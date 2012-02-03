@@ -1,12 +1,21 @@
 var totalW = $("#progressBar").width();
 var barOffsetLeft = $("#progressBar").offset().left;
+var durList = 0;
+
+// Keeps track of which video is being played
+var curVid = 0;
+
+// Keeps track of all videos start/end time
+var vidStart = [];
+var vidEnd = [];
 
 // Tricks jwplayer into preloading
 jwplayer().play();
 jwplayer().pause();
 
 $('#progressBar').click(function(e){
-	var dur = jwplayer().getDuration();
+
+	var dur = getDuration();
 	if (dur == 0) {
 		jwplayer().play();
 	}
@@ -14,6 +23,34 @@ $('#progressBar').click(function(e){
 	jwplayer().seek(dur * x / totalW);
 })
 
+function getDuration() {
+	return durList == 0 ? jwplayer().getDuration() : durList;
+}
+
+// Returns elapsed time of the mashup based on elapsed time of current video
+function getPlaylistElapsed(vidPosition) {
+	var pos = 0;
+	for (var i = 0; i < vidStart.length; i++) {
+		pos += vidStart[i];
+	}
+	
+	return pos + vidPosition;
+}
+
+function getPlaylistDuration() {
+	var list = jwplayer().getPlaylist();
+	console.log(list);
+	if (list == null) {
+		return 0;
+	}
+	
+	var dur = 0;
+	for (var i in list) {
+		dur += list[i].duration - list[i].start;
+	}
+
+	return dur;
+}
 
 function getOffsetFromTime(time) {
 	var dur = jwplayer().getDuration();
@@ -31,6 +68,9 @@ var annoEnd = []; // end time of each anno
 
 // The marker positioning can only be calculated once duration metadata gets here
 jwplayer().onMeta(function(data){
+	if (durList == 0) {
+		durList = getPlaylistDuration();
+	}
 	if (!metaReady && data.metadata.duration > 0) {	
 		metaReady = true;
 		checkMetaAndAnnoComplete();
@@ -105,15 +145,23 @@ fetch_annotations('/Transcriptions-f1rc.xml', storeAnnos);
 var prevT = 0;
 jwplayer().onTime(function(data){
 				// console.log(data);
-				var totalT = data.duration;
+				var totalT = getDuration();
 				var curT = data.position;
 				var curW = totalW * curT / totalT;
 				$("#progressElapsed").width(curW);
 				
 				// Checks every second to see if we need to display any bubble
 				if ( Math.floor(curT) - prevT > 0 || curT < prevT ) {
+
+					
 					// Remembers the time so we can check if we've already run this job in this second 
 					prevT = Math.floor(curT);
+
+					// Playlist manipulation
+					if (prevT == 9) {
+						jwplayer().playlistNext();
+					}
+					
 					for (var i in annoStart) {
 						var curBubble = $('.bubble.lv' + i);
 						if (curT >= annoStart[i] && curT < annoEnd[i]) {
